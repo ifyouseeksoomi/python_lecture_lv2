@@ -87,8 +87,46 @@ class Car:
 
     def __str__(self):
         # return 'str: {} - {}'.format(self._company, self._details)
-        return 'str : f'{self._company} - {self._details}'
+        return 'str: ' + f'{self._company} - {self._details}'
+
+    def __repr__(self):
+        return 'repr: ' + f'{self._company} - {self._details}'
+
+    # 사실 str와 repr의 메소드는 역할이 비슷하다
+
+    # 강사 말에 따르면,
+    # __str__ : 비공식적으로(사용자 입장) 사용자 입장에서 string으로 print()를 사용할 때,
+    # __repr__: 반대로 객체 그 자체를 그대로 보다 엄격히(개발자 입장) 보여주고 싶을 때
 
 
 car1 = Car('Ferrari', {'color': 'White', 'horsepower': 400, 'price': 8000})
-print(car1)  # 스페셜 메소드 설정 전에는 매핑 주소가 나오지만, 클래스 내부에 스페셜 메소드 설정 시 str로 뜸
+print(car1)
+# 스페셜 메소드(__str__) 설정 전에는 매핑 주소가 나옴 클래스 내부에 스페셜 메소드 설정 시 str로 뜸
+# __repr__ 설정 전에는 __str__이 나오지만 설정 후에는 __str__이 있어도 __repr__로 나옴
+
+car2 = Car('BMW', {'color': 'Black', 'horsepower': 270, 'price': 5000})
+car3 = Car('Audi', {'color': 'Silver', 'horsepower': 300, 'price': 6000})
+print(car2)
+print(car3)
+
+# __dict__
+print(car1.__dict__)
+# 일반 속성으로 접근하는 것으로 해당 객체 안의 모든 속성을(속성명까지) 볼 수 있다 (str, repr와는 다름) - dictionary 형식이라 dict인듯
+
+# dir
+print(dir(car1))
+# ['__class__', '__delattr__', '__dict__', '__dir__', '_doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_company', '_details']
+# car1 객체의 모든 메타 정보가 보여짐
+# 이때 보여지는 모든 메타 클래스는 전부다 파이썬에서 구현해 놓은 것으로 내가 굳이 클래스 내에 선언하지 않더라도 갖다 쓸 수가 있다
+
+# 리스트 선언
+car_list = []
+car_list.append(car1)
+car_list.append(car2)
+car_list.append(car3)
+
+print(car_list)
+
+for x in car_list:
+    # print(x) # str으로 나옴
+    print(repr(x))  # repr로 나옴
